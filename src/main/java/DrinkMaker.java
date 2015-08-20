@@ -19,10 +19,22 @@ public class DrinkMaker {
         drink = new CDrinkDecorator(drink);
         return this;
     }
+
     public DrinkMaker withKosong() {
-        drink = new KosongDecorator(drink);
+        drink = new KosongDrinkDecorator(drink);
         return this;
     }
+
+    public DrinkMaker withGao() {
+        drink = new GaoDrinkDecorator(drink);
+        return this;
+    }
+
+    public DrinkMaker withPeng() {
+        drink = new PengDrinkDecorator(drink);
+        return this;
+    }
+
     public Drink make() {
         return drink;
     }
