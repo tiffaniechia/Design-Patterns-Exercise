@@ -15,7 +15,7 @@ public class TehDrinkTest {
 
     @Test
     public void testShouldGetTehName() throws Exception {
-        assertEquals("Teh", tehDrink.toString());
+        assertEquals("teh", tehDrink.toString());
     }
 
     @Test

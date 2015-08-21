@@ -1,3 +1,5 @@
+package drinkMaker;
+
 import decorators.CDrinkDecorator;
 import decorators.GaoDrinkDecorator;
 import decorators.KosongDrinkDecorator;
@@ -13,9 +15,11 @@ public class DrinkMaker {
 
     private ArrayList<listeners.Observer> observers = new ArrayList<listeners.Observer>();
     private Drink drink;
+    private int drinkCount;
 
     public DrinkMaker(String drink){
         this.drink = getDrink(drink);
+        this.drinkCount = 0;
     }
 
     private Drink getDrink(String drink) {
@@ -49,6 +53,7 @@ public class DrinkMaker {
 
     public Drink make() {
         notifyObservers(this.drink);
+        drinkCount++;
         return drink;
     }
 
@@ -62,4 +67,7 @@ public class DrinkMaker {
         observers.add(observer);
     }
 
+    public int drinkCount() {
+        return drinkCount;
+    }
 }

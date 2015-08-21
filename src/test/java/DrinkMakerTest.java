@@ -1,9 +1,11 @@
+import drinkMaker.DrinkMaker;
 import drinks.KopiDrink;
 import drinks.MiloDrink;
 import listeners.CommissionTracker;
 import listeners.CupTracker;
 import org.junit.Before;
 import org.junit.Test;
+import strategies.JuniorCommissionStrategy;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -32,7 +34,7 @@ public class DrinkMakerTest {
     @Test
     public void testKopiCDrink() {
         this.drinkMaker = new DrinkMaker("kopi");
-        assertEquals(drinkMaker.withC().make().toString(), "Kopi C");
+        assertEquals(drinkMaker.withC().make().toString(), "kopi C");
     }
 
     @Test
@@ -44,7 +46,7 @@ public class DrinkMakerTest {
     @Test
     public void testKopiCKosongDrink() {
         this.drinkMaker = new DrinkMaker("kopi");
-        assertEquals(drinkMaker.withC().withKosong().make().toString(), "Kopi C Kosong");
+        assertEquals(drinkMaker.withC().withKosong().make().toString(), "kopi C kosong");
     }
 
     @Test
@@ -56,7 +58,7 @@ public class DrinkMakerTest {
     @Test
     public void testKopiPengDrink() {
         this.drinkMaker = new DrinkMaker("kopi");
-        assertEquals(drinkMaker.withPeng().make().toString(), "Kopi peng");
+        assertEquals(drinkMaker.withPeng().make().toString(), "kopi peng");
     }
 
     @Test
@@ -68,7 +70,7 @@ public class DrinkMakerTest {
     @Test
     public void testKopiGaoDrink() {
         this.drinkMaker = new DrinkMaker("kopi");
-        assertEquals(drinkMaker.withGao().make().toString(), "Kopi gao");
+        assertEquals(drinkMaker.withGao().make().toString(), "kopi gao");
     }
 
     @Test
@@ -89,9 +91,11 @@ public class DrinkMakerTest {
     @Test
     public void testShouldRegisterCommisionTrackerObserver() throws Exception {
         this.drinkMaker = new DrinkMaker("kopi");
-        CommissionTracker commissionTracker = new CommissionTracker();
+        //decoupled from the drinkmaker
+        CommissionTracker commissionTracker = new CommissionTracker(new JuniorCommissionStrategy());
         drinkMaker.registerObserver(commissionTracker);
-        drinkMaker.make();
-        assertThat(commissionTracker.totalCommission(), is(0.1));
+        assertThat(commissionTracker.totalCommission(drinkMaker.make()), is(0.15));
     }
+
+
 }

@@ -10,10 +10,10 @@ public class CupTracker implements Observer {
     }
 
     public void update(Drink drink) {
-        cupsIssuedCount += 1;
+        this.cupsIssuedCount += 1;
     }
 
     public int cupsIssuedCount() {
-        return cupsIssuedCount;
+        return this.cupsIssuedCount;
     }
 }

@@ -1,22 +1,25 @@
 package listeners;
 
 import drinks.Drink;
+import strategies.CommissionStrategy;
 
 public class CommissionTracker implements Observer {
-    private double totalCommission;
-    private final double commission;
+    private  int drinkCount;
+    private CommissionStrategy strategy;
 
-    public CommissionTracker() {
-        this.commission = 0.1;
-        this.totalCommission = 0;
+    //decoupling commission from commissionTracker that way you can reuse it (not doing dependency injections then switching)
+    public CommissionTracker(CommissionStrategy commissionStrategy) {
+        this.strategy = commissionStrategy;
+        this.drinkCount = 0;
     }
 
     @Override
-    public void update(Drink drink) {
-        this.totalCommission += this.commission * drink.getPrice();
+    public void update( Drink drink) {
+        totalCommission(drink);
+        drinkCount++;
     }
 
-    public double totalCommission() {
-        return totalCommission;
+    public double totalCommission(Drink drink) {
+       return  strategy.calculateCommission(drinkCount, drink);
     }
 }
