@@ -1,5 +1,17 @@
+import decorators.CDrinkDecorator;
+import decorators.GaoDrinkDecorator;
+import decorators.KosongDrinkDecorator;
+import decorators.PengDrinkDecorator;
+import drinks.Drink;
+import drinks.KopiDrink;
+import drinks.MiloDrink;
+import drinks.TehDrink;
+
+import java.util.*;
+
 public class DrinkMaker {
 
+    private ArrayList<listeners.Observer> observers = new ArrayList<listeners.Observer>();
     private Drink drink;
 
     public DrinkMaker(String drink){
@@ -36,6 +48,18 @@ public class DrinkMaker {
     }
 
     public Drink make() {
+        notifyObservers(this.drink);
         return drink;
     }
+
+    private void notifyObservers(Drink drink) {
+        for (listeners.Observer observer: observers) {
+            observer.update(drink);
+        }
+    }
+
+    public void registerObserver(listeners.Observer observer) {
+        observers.add(observer);
+    }
+
 }

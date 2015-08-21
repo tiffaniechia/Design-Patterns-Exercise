@@ -1,3 +1,4 @@
+import drinks.TehDrink;
 import org.junit.Before;
 import org.junit.Test;
 

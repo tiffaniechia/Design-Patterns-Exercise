@@ -1,3 +1,7 @@
+import drinks.KopiDrink;
+import drinks.MiloDrink;
+import listeners.CommissionTracker;
+import listeners.CupTracker;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -73,4 +77,21 @@ public class DrinkMakerTest {
         assertThat(drinkMaker.withGao().make().getPrice(), is(1.15));
     }
 
+    @Test
+    public void testShouldRegisterCupTrackerObserver() throws Exception {
+        this.drinkMaker = new DrinkMaker("kopi");
+        CupTracker cupTracker = new CupTracker();
+        drinkMaker.registerObserver(cupTracker);
+        drinkMaker.make();
+        assertThat(cupTracker.cupsIssuedCount(), is(1));
+    }
+
+    @Test
+    public void testShouldRegisterCommisionTrackerObserver() throws Exception {
+        this.drinkMaker = new DrinkMaker("kopi");
+        CommissionTracker commissionTracker = new CommissionTracker();
+        drinkMaker.registerObserver(commissionTracker);
+        drinkMaker.make();
+        assertThat(commissionTracker.totalCommission(), is(0.1));
+    }
 }

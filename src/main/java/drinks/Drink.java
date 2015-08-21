@@ -1,3 +1,5 @@
+package drinks;
+
 public class Drink {
     private final String name;
     private final double price;
